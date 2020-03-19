@@ -129,18 +129,16 @@ refresh():void{
   }
 
   clicked(event:Event){
-    // let elementId: string = (event.target as Element).id;
-    // let row:number=parseInt(elementId[0]);
-    // //console.log(row);
-    // let col:number=parseInt(elementId[2]);
 
-    // //updates val to value of pressed value in board
-    // this.val=this.snaketiles[row][col];
-    // if(this.val==3){
-    //   this.snaketiles[row][col]=0;
-    //   document.getElementById(elementId).style.backgroundColor="white";
-    // }
-    
+  let elementId: string = (event.target as Element).id; 
+  let row:number=parseInt(elementId[0]);
+  //console.log(row);
+  let col:number=parseInt(elementId[2]);
+
+  if(this.snaketiles[row][col]==3){
+    this.snaketiles[row][col]=0;
+    document.getElementById(elementId).style.backgroundColor="white";
+  }
     
   }
 
@@ -200,7 +198,12 @@ refresh():void{
 
   renders(): void {
    //console.log(this.theQ);
-   
+   if(this.theQ.length==0)
+   {
+     clearInterval(this.intervals);
+     console.log("No path");
+     return;
+   }
    this.element=this.theQ[0];
     
     let rows=this.element.row
@@ -261,7 +264,7 @@ refresh():void{
     this.theQ.shift();
     this.theQ.push({row:this.startrow,col:this.startcol,isvisited:true,prevrow:-1,prevcol:-1});
      this.intervals=setInterval(() => {
-      this.renders()}, 50);
+      this.renders()}, 20);
  //console.log(this.theQ);
 
 
@@ -345,6 +348,25 @@ this.pressed=false;
     //   doc.style.backgroundColor="white";
     // }
   }
+
+
+  /*renderdfs():void{
+    this.element=this.theQ[this.theQ];
+    
+    let rows=this.element.row
+    let cols=this.element.col;
+
+
+
+
+  }
+
+  depthfirst():void{
+    this.theQ.shift();
+    this.theQ.push({row:this.startrow,col:this.startcol,isvisited:true,prevrow:-1,prevcol:-1});
+    this.intervals=setInterval(() => {
+    this.renderdfs()}, 50);
+  }*/
   
   
 
