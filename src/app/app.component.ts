@@ -11,6 +11,7 @@ import { element } from 'protractor';
 export class AppComponent {
   title = 'visualsearch';
   map=new Map();
+  foundpath:number=0;
   //start stores index of starting element destination of destination element
   pathrow:number;
   pathcol:number;
@@ -36,6 +37,7 @@ export class AppComponent {
 
   
 keepBlocks():void{
+  this.foundpath=0;
   for(let i=0;i<10;i++){
     for(let j=0;j<10;j++)
     {
@@ -65,6 +67,7 @@ keepBlocks():void{
 }
 
 refresh():void{
+  this.foundpath=0;
   
   for(let i=0;i<10;i++){
     //this.snaketiles[i]=new Array(10);
@@ -184,14 +187,23 @@ refresh():void{
    
    document.getElementById(elementStr).style.backgroundColor="blue";
    let ele:string=this.map.get(elementStr);
-   console.log(ele);
+  // console.log(ele);
   // clearInterval(this.intervals);
+  if(this.pathrow==this.startrow&&this.pathcol==this.startcol)
+   {
+     console.log(this.pathrow);
+     this.foundpath=1;
+    clearInterval(this.intervals);
+    return;
+   }
    this.pathrow=parseInt(ele[0]);
    this.pathcol=parseInt(ele[2]);
-   if(this.pathrow==this.startrow&&this.pathcol==this.startcol)
-   {
-    clearInterval(this.intervals);
-   }
+  //  if(this.pathrow==this.startrow&&this.pathcol==this.startcol)
+  //  {
+  //    console.log(this.pathrow);
+  //    this.foundpath=1;
+  //   clearInterval(this.intervals);
+  //  }
    //console.log(this.pathrow);
    
 
@@ -265,11 +277,14 @@ refresh():void{
   }
 
   startSearch(event:Event){
+    if(this.foundpath==0){
     this.theQ.shift();
+    
     this.theQ.push({row:this.startrow,col:this.startcol,isvisited:true,prevrow:-1,prevcol:-1});
      this.intervals=setInterval(() => {
       this.renders()}, 20);
  //console.log(this.theQ);
+     }
 
 
   }
