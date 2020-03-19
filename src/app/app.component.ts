@@ -130,15 +130,15 @@ refresh():void{
 
   clicked(event:Event){
 
-  let elementId: string = (event.target as Element).id; 
-  let row:number=parseInt(elementId[0]);
-  //console.log(row);
-  let col:number=parseInt(elementId[2]);
+  // let elementId: string = (event.target as Element).id; 
+  // let row:number=parseInt(elementId[0]);
+  // //console.log(row);
+  // let col:number=parseInt(elementId[2]);
 
-  if(this.snaketiles[row][col]==3){
-    this.snaketiles[row][col]=0;
-    document.getElementById(elementId).style.backgroundColor="white";
-  }
+  // if(this.snaketiles[row][col]==3){
+  //   this.snaketiles[row][col]=0;
+  //   document.getElementById(elementId).style.backgroundColor="white";
+  // }
     
   }
 
@@ -157,9 +157,13 @@ refresh():void{
     //console.log(this.val);
 
     //checks if val is white or brown
-    if(this.val==0||this.val==3){
+    if(this.val==0){
       this.snaketiles[row][col]=3;
       document.getElementById(elementId).style.backgroundColor="grey";
+    }
+    else if(this.val==3){
+      this.snaketiles[row][col]=0;
+      document.getElementById(elementId).style.backgroundColor="white";
     }
     else if(this.val==1||this.val==2){//checks if val is green
       this.prevrow=row;
